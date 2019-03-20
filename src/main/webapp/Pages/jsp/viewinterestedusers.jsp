@@ -27,12 +27,14 @@
 		<div class="container__title col-xs-12 col-md-12">
 			<h3>YOUR NEXT HIRE IS HERE!!!</h3>
 		</div>
-					<c:choose>
+		<c:choose>
 						<c:when test="${empty appliedUsers}">
 						<div class="success">
 						<c:out value="NO INTERESTED CANDIDATES!!"/>
 						</div>
 						</c:when>
+					
+					
 		<c:otherwise>
 		<div style="overflow-x:auto">
 		<table class="container__customers">

@@ -22,7 +22,6 @@ import com.zilker.onlinejobsearch.beans.Company;
 import com.zilker.onlinejobsearch.beans.CompanyDetails;
 import com.zilker.onlinejobsearch.beans.JobMapping;
 import com.zilker.onlinejobsearch.beans.JobVacancy;
-import com.zilker.onlinejobsearch.beans.User;
 import com.zilker.onlinejobsearch.delegate.CompanyDelegate;
 import com.zilker.onlinejobsearch.delegate.JobDelegate;
 import com.zilker.onlinejobsearch.delegate.UserDelegate;
@@ -105,29 +104,30 @@ public class CompanyController {
 	 * controller to add a new company
 	 */
 	@RequestMapping(value = "/companies", method = RequestMethod.POST)
-	public ModelAndView AddNewCompany(@RequestParam("companyName") String companyName,
-			@RequestParam("websiteUrl") String websiteUrl, @RequestParam("companyLogo") String companyLogo,
-			HttpSession session) {
-		ModelAndView model = new ModelAndView("login");
+	public void AddNewCompany(@RequestParam("companyName") String companyName,
+			@RequestParam("websiteUrl") String websiteUrl, @RequestParam("companyLogo") String companyLogo,HttpServletResponse response,
+			HttpSession session) throws IOException{
+		PrintWriter out = response.getWriter();
 		try {
-			CompanyDetails companyDetails = new CompanyDetails();
-			if (session.getAttribute("email") == null) {
-				model = new ModelAndView("home");
-			} else {
-				companyDetails = companyDelegate.addNewCompany(companyName, websiteUrl, companyLogo);
-				if (companyDetails != null) {
-					model = new ModelAndView("signup");
-					ArrayList<CompanyDetails> displayCompanies = companyDelegate.displayCompanies();
-					model.addObject("companies", displayCompanies);
-					model.addObject("login", new User());
+				if (companyDelegate.addNewCompany(companyName, websiteUrl, companyLogo).equals("Success")) {
+					
+					out.print("success");
+					out.flush();
 				} else {
-					model = new ModelAndView("error");
+					out.print("error");
+					out.flush();
 				}
-			}
-		} catch (Exception e) {
-			model = new ModelAndView("error");
+		
+		}catch(ApplicationException e) {
+			out.print("companyExists");
+			out.flush();
 		}
-		return model;
+	
+		catch (Exception e) {
+			out.print("error");
+			out.flush();
+		}
+	
 	}
 
 	

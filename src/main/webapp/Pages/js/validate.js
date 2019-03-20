@@ -534,5 +534,109 @@ function deleteTag(id){
 	
 }
 
+function addCompany(event){
 
+	
+	    var formEl = $(event);    
+	    var snackbar = document.getElementById("snackbar");   
+	    snackbar.removeChild(snackbar.childNodes[0]);
+	    
+	    $.ajax({
+	      type: 'POST',
+	      url: formEl.prop('action'),
+	      accept: {
+	        javascript: 'application/javascript'
+	      },
+	      data: formEl.serialize(),
+	      beforeSend: function() {
+	    	 
+	      },
+	      dataType:"text",
+	      success:function(msg){
+	    	  console.log(msg);
+	    	  if (msg === 'success'){
+	    	  var para = document.createElement("p");
+	    	  var node = document.createTextNode("COMPANY IS ADDED!!");
+	    	  para.appendChild(node);
+	    	  var element = document.getElementById("snackbar");
+	    	  element.className="show";
+	    	  element.appendChild(para);
+	    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);
+	    	  } 
+	    	  else if(msg === 'companyExists'){
+	    		  var para = document.createElement("p");
+		    	  var node = document.createTextNode("COMPANY ALREADY EXISTS");
+		    	  para.appendChild(node);
+		    	  var element = document.getElementById("snackbar");
+		    	  element.className="show";
+		    	  element.appendChild(para);
+		    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);  
+	    	  }else if(msg === 'error'){
+	    		  var para = document.createElement("p");
+		    	  var node = document.createTextNode("OOPS!!SOMETHING WENT WRONG");
+		    	  para.appendChild(node);
+		    	  var element = document.getElementById("snackbar");
+		    	  element.className="show";
+		    	  element.appendChild(para);
+		    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);  
+	    	  }
+	      }
+	    });
+
+return true;
+	
+}
+
+function addJob(event){
+
+	
+    var formEl = $(event);    
+    var snackbar = document.getElementById("snackbar");   
+    snackbar.removeChild(snackbar.childNodes[0]);
+    
+    $.ajax({
+      type: 'POST',
+      url: formEl.prop('action'),
+      accept: {
+        javascript: 'application/javascript'
+      },
+      data: formEl.serialize(),
+      beforeSend: function() {
+    	 
+      },
+      dataType:"text",
+      success:function(msg){
+    	  console.log(msg);
+    	  if (msg === 'success'){
+    	  var para = document.createElement("p");
+    	  var node = document.createTextNode("JOB DESIGNATION ADDED!!");
+    	  para.appendChild(node);
+    	  var element = document.getElementById("snackbar");
+    	  element.className="show";
+    	  element.appendChild(para);
+    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);
+    	  } 
+    	  else if(msg === 'jobDesignationExists'){
+    		  var para = document.createElement("p");
+	    	  var node = document.createTextNode("JOB DESIGNATION ALREADY EXISTS");
+	    	  para.appendChild(node);
+	    	  var element = document.getElementById("snackbar");
+	    	  element.className="show";
+	    	  element.appendChild(para);
+	    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);  
+    	  }else if(msg === 'error'){
+    		  var para = document.createElement("p");
+	    	  var node = document.createTextNode("OOPS!!SOMETHING WENT WRONG");
+	    	  para.appendChild(node);
+	    	  var element = document.getElementById("snackbar");
+	    	  element.className="show";
+	    	  element.appendChild(para);
+	    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);  
+    	  }
+      }
+    });
+
+return true;
+
+}
 

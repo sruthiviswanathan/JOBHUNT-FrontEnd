@@ -11,6 +11,7 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
 
 import com.zilker.onlinejobsearch.Exception.ApplicationException;
+import com.zilker.onlinejobsearch.Exception.CompanyAlreadyExistsException;
 import com.zilker.onlinejobsearch.Exception.CompanyNotFoundException;
 import com.zilker.onlinejobsearch.Exception.LocationNotFoundException;
 import com.zilker.onlinejobsearch.Exception.VacancyAlreadyPublishedException;
@@ -103,9 +104,9 @@ public class CompanyDelegate {
 	}
 
 
-	public CompanyDetails addNewCompany(String companyName,String websiteUrl,String companyLogo) throws Exception {
+	public String addNewCompany(String companyName,String websiteUrl,String companyLogo) throws ApplicationException {
 		// TODO Auto-generated method stub
-		CompanyDetails addCompany = new CompanyDetails();
+		String message="";
 		try {
 			Gson gson = new Gson();
 			CompanyDetails company = new CompanyDetails();
@@ -117,14 +118,25 @@ public class CompanyDelegate {
 			String url = "http://localhost:8081/companies";	
 			StringBuffer response = new StringBuffer();
 			response =  (StringBuffer) util.postRequest(url,json);	        
-			addCompany = gson.fromJson(response.toString(),CompanyDetails.class);
+			JSONParser parser = new JSONParser(); 
+			JSONObject data = (JSONObject) parser.parse(response.toString());     
+			JSONObject data1 = (JSONObject) data.get("responseBody");
+			message = (String) data1.get("message");
+			if(message.equals("Success")) {
+				
+			}else {
+				throw new CompanyAlreadyExistsException();
+			}
 			
-			
-		} catch (Exception e) {
+		} catch(CompanyAlreadyExistsException e) {
 			throw e;
 		}
+		
+		catch (Exception e) {
+			throw new ApplicationException("Exception","Exception");
+		}
 
-		return addCompany;
+		return message;
 	}
 
 

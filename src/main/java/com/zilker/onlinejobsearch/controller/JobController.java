@@ -35,55 +35,51 @@ public class JobController {
 	@Autowired
 	CompanyDelegate companyDelegate;
 
-
-	
 	@RequestMapping(value = "/jobdesignation/companies", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView findJobs(@RequestParam("job") String jobDesignation, HttpSession session,
-			HttpServletResponse response) throws ApplicationException{
-		ModelAndView model =new ModelAndView("viewjobs");
+			HttpServletResponse response) throws ApplicationException {
+		ModelAndView model = new ModelAndView("viewjobs");
 		ArrayList<JobVacancy> vacancyDetails = new ArrayList<JobVacancy>();
 		try {
 			if (session.getAttribute("email") == null) {
 				model = new ModelAndView("home");
 			} else {
 
-					int userId = (Integer) session.getAttribute("userId");
-					ArrayList<String> jobRole = new ArrayList<String>();
-					jobRole.add(jobDesignation);
-				 	vacancyDetails = jobDelegate.retrieveVacancyByJob1(jobDesignation, userId);
-					model.addObject("job", jobRole);
-					model.addObject("displayVacancy", vacancyDetails);
+				int userId = (Integer) session.getAttribute("userId");
+				ArrayList<String> jobRole = new ArrayList<String>();
+				jobRole.add(jobDesignation);
+				vacancyDetails = jobDelegate.retrieveVacancyByJob1(jobDesignation, userId);
+				model.addObject("job", jobRole);
+				model.addObject("displayVacancy", vacancyDetails);
 
 			}
 		} catch (ApplicationException e) {
 			model = new ModelAndView("viewjobs");
-			model.addObject("noJobDesignation","yes");
-		}
-		catch (Exception e) {
+			model.addObject("noJobDesignation", "yes");
+		} catch (Exception e) {
 			model = new ModelAndView("error");
 		}
 		return model;
 	}
 
 	@RequestMapping(value = "/company/jobs/apply", method = RequestMethod.POST)
-	public void ApplyJobs(@RequestParam("location") String location,@RequestParam("companyName") String companyName,@RequestParam("jobDesignation") String jobDesignation, HttpServletResponse response,HttpSession session)
+	public void ApplyJobs(@RequestParam("location") String location, @RequestParam("companyName") String companyName,
+			@RequestParam("jobDesignation") String jobDesignation, HttpServletResponse response, HttpSession session)
 			throws IOException {
 		PrintWriter out = response.getWriter();
 		try {
 			response.setContentType("text/html;charset=UTF-8");
 			int userId = (Integer) session.getAttribute("userId");
 			String email = (String) session.getAttribute("email");
-			if (userDelegate.applyForJob(companyName,jobDesignation,location,userId,email).equals("Success")) {
+			if (userDelegate.applyForJob(companyName, jobDesignation, location, userId, email).equals("Success")) {
 				out.print("success");
 				out.flush();
-			} 
-		}
-		catch (ApplicationException e) {
+			}
+		} catch (ApplicationException e) {
 			out.print("error");
 			out.flush();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			out.print("error");
 			out.flush();
 		}
@@ -115,43 +111,44 @@ public class JobController {
 		try {
 			if (session.getAttribute("email") == null) {
 				response.sendRedirect("index.jsp");
-			}else {
-			int userId = (Integer) session.getAttribute("userId");
-			if (companyDelegate.publishVacancy(userId,jobDesignation,location,salary,count,description).equals("Success")) {
-				out.print("success");
-				out.flush();
-			} 
+			} else {
+				int userId = (Integer) session.getAttribute("userId");
+				if (companyDelegate.publishVacancy(userId, jobDesignation, location, salary, count, description)
+						.equals("Success")) {
+					out.print("success");
+					out.flush();
+				}
 			}
 		} catch (ApplicationException e) {
 			out.print("error");
 			out.flush();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			out.print("error");
 			out.flush();
 		}
 	}
 
 	@RequestMapping(value = "/jobs", method = RequestMethod.POST)
-	public ModelAndView AddNewJobDesignation(@RequestParam("newjob") String jobRole, HttpSession session)
+	public void AddNewJobDesignation(@RequestParam("newjob") String jobRole,HttpServletResponse response,HttpSession session)
 			throws Exception {
-		ModelAndView model = new ModelAndView("postjob");
-		JobMapping jobs = new JobMapping();
-		ArrayList<JobMapping> job= null;
+		PrintWriter out = response.getWriter();
+		
 		try {
-			if (session.getAttribute("email") == null) {
-				model = new ModelAndView("home");
-			} else {
+			
 				int userId = (Integer) session.getAttribute("userId");
-				jobs = jobDelegate.addNewJob(jobRole, userId);
-				if (jobs != null) {
-					job = jobDelegate.displayJobs();
-					model.addObject("jobs", job);
-				} 
-			}
-		} catch (Exception e) {
-			model = new ModelAndView("error");
+				if (jobDelegate.addNewJob(jobRole, userId).equals("Success")) {
+					out.print("success");
+					out.flush();
+				}
+			
+		}catch (ApplicationException e) {
+			out.print("jobDesignationExists");
+			out.flush();
+		} 
+		catch (Exception e) {
+			out.print("error");
+			out.flush();
 		}
-		return model;
+	
 	}
 }

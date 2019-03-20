@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.zilker.onlinejobsearch.Exception.ApplicationException;
+import com.zilker.onlinejobsearch.Exception.JobDesignationAlreadyExistsException;
 import com.zilker.onlinejobsearch.Exception.JobDesignationNotFoundException;
 import com.zilker.onlinejobsearch.beans.JobMapping;
 import com.zilker.onlinejobsearch.beans.JobVacancy;
@@ -73,9 +74,10 @@ public class JobDelegate {
 		return job;
 	}
 
-	public JobMapping addNewJob(String jobRole, int userId) throws Exception {
+	public String addNewJob(String jobRole, int userId) throws ApplicationException {
 		// TODO Auto-generated method stub
-		JobMapping jobMapping = new JobMapping();
+		
+		String message="";
 		try {
 			Gson gson = new Gson();
 			JobMapping job = new JobMapping();
@@ -84,13 +86,27 @@ public class JobDelegate {
 			String url = "http://localhost:8081/jobs?id="+userId;	
 			StringBuffer response = new StringBuffer();
 			response =  (StringBuffer) util.postRequest(url,json);	        
-			jobMapping = gson.fromJson(response.toString(),JobMapping.class);
-					
-		} catch (Exception e) {
+			JSONParser parser = new JSONParser(); 
+			JSONObject data = (JSONObject) parser.parse(response.toString());     
+			JSONObject data1 = (JSONObject) data.get("responseBody");
+			message = (String) data1.get("message");
+			if(message.equals("Success")) {
+				
+			}else {
+				throw new JobDesignationAlreadyExistsException();
+			}	
+			
+			
+			
+		}catch(JobDesignationAlreadyExistsException e) {
 			throw e;
 		}
+		
+		catch (Exception e) {
+			throw new ApplicationException("Exception","Exception");
+		}
 
-		return jobMapping;
+		return message;
 
 	}	
 	

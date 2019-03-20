@@ -16,6 +16,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	<script src="${Config.BASE_PATH}Pages/js/jquery-3.3.1.min.js"></script>
 <title>LOGIN/SIGNUP</title>
 </head>
 
@@ -30,6 +31,11 @@
 				<li style="float: left">JOB HUNT</li>
 			</ul>
 		</div> 
+
+	<div id="snackbar">
+                        
+    </div>
+
 
 	<div class="container__formcontainer">
 
@@ -81,6 +87,7 @@
 		
 		
 		<div class="signupforms" id="hideonlogin">
+			
 			
 			
 			<form action="${Config.BASE_PATH}users" id="signup" name="signup" onsubmit="return registerForm()"
@@ -161,6 +168,8 @@
 			</form>
 			
 			
+			
+			
 			<div id="adminoptional">
 				
 				<form action="${Config.BASE_PATH}register/admin"  name="admin" id="signupadmin" onsubmit="return validateForm()" method="post">
@@ -174,6 +183,7 @@
 							</div>
 						</div>
 						
+							
 						<div class="signupadmin__field col-xs-12 col-md-12">	
 						<label for="uname" class="field__entry row col-25"><b>USERNAME*</b></label> 
 						<input type="text" class="field__input row col-75" name="userName"placeholder="Your name.."> 
@@ -230,7 +240,7 @@
 		</div>
 	</div>
 	<div class="container__form-popup" id="myForm">
-		<form action="${Config.BASE_PATH}companies" class="form-container" method="post">
+		<form action="${Config.BASE_PATH}companies" id="addCompany" onsubmit="event.preventDefault(); addCompany(this);" class="form-container" method="post">
 			<h3>ADD NEW COMPANY</h3>
 			<input type="text" placeholder="Enter new Company" name="companyName"
 				required>

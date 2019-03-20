@@ -45,12 +45,12 @@ public class UserController {
 	@RequestMapping(value = "/companies", method = RequestMethod.GET)
 	public ModelAndView showLoginPage(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("login");
+		ArrayList<CompanyDetails> displayCompanies= null;
 		try {
-			ArrayList<CompanyDetails> displayCompanies = companyDelegate.displayCompanies();
+			displayCompanies = companyDelegate.displayCompanies();
 			model.addObject("companies", displayCompanies);
 			model.addObject("login", new User());
 		} catch (Exception e) {
-			System.out.println(e);
 			model = new ModelAndView("error");
 		}
 		return model;
@@ -265,7 +265,6 @@ public class UserController {
 				}
 			}
 		} catch (Exception e) {
-
 			out.print("error");
 			out.flush();
 		}

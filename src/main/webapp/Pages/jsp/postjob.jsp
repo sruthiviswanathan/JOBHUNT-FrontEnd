@@ -106,8 +106,7 @@
 	</div>
 	
 	<div class="container__form-popup" id="myForm">
-	<form action="${Config.BASE_PATH}jobs" class="form-container" method="post">
-		
+	<form action="${Config.BASE_PATH}jobs" id="addnewjob" onsubmit="event.preventDefault(); addJob(this);"  class="form-container" method="post">
 			<h3>ADD NEW JOB DESIGNATION</h3>
 			<input type="text" placeholder="Enter new Job designation"
 				name="newjob" required>

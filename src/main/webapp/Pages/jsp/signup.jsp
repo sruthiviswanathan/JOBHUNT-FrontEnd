@@ -32,6 +32,11 @@
 			</ul>
 		</div> 
 
+	<div id="snackbar">
+                        
+    </div>
+
+
 	<div class="container__formcontainer">
 
 		<div id="myDIV"  class="formcontainer__nav" class="row col-25">
@@ -236,7 +241,7 @@
 		</div>
 	</div>
 	<div class="container__form-popup" id="myForm">
-		<form action="${Config.BASE_PATH}companies" class="form-container" method="post">
+		<form action="${Config.BASE_PATH}companies" id="addCompany" onsubmit="event.preventDefault(); addCompany(this);" class="form-container" method="post">
 			<h3>ADD NEW COMPANY</h3>
 			<input type="text" placeholder="Enter new Company" name="companyName"
 				required>

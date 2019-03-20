@@ -185,56 +185,6 @@ function setValue2(id){
 	 document.getElementById("do"+id).value = "DELETE";
 }
 
-function updateJobs(event){
-
-	    var formEl = $(event);
-	    console.log(event);	    
-	    var snackbar = document.getElementById("snackbar");   
-	    snackbar.removeChild(snackbar.childNodes[0]);
-	    
-	    $.ajax({
-	      type: 'POST',
-	      url: formEl.prop('action'),
-	      accept: {
-	        javascript: 'application/javascript'
-	      },
-	      data: formEl.serialize(),
-	      dataType:"text",
-	      success:function(msg){
-	    	  console.log(msg);
-	    	  if (msg === 'updateSuccess'){
-	    	  var para = document.createElement("p");
-	    	  var node = document.createTextNode("VACANCY HAS BEEN UPDATED SUCCESSFULLY!!");
-	    	  para.appendChild(node);
-	    	  var element = document.getElementById("snackbar");
-	    	  element.className="show";
-	    	  element.appendChild(para);
-	    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);
-	    	  } 
-	    	  else if(msg === 'deleteSuccess'){
-	    		  var para = document.createElement("p");
-		    	  var node = document.createTextNode("VACANCY HAS BEEN DELETED SUCCESSFULLY");
-		    	  para.appendChild(node);
-		    	  var element = document.getElementById("snackbar");
-		    	  element.className="show";
-		    	  element.appendChild(para);
-		    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);  
-	    	  } 
-	    	  else if(msg === 'error'){
-	    		  var para = document.createElement("p");
-		    	  var node = document.createTextNode("OOPS!!SOMETHING WENT WRONG!!");
-		    	  para.appendChild(node);
-		    	  var element = document.getElementById("snackbar");
-		    	  element.className="show";
-		    	  element.appendChild(para);
-		    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);  
-	    	  }
-	      }
-	    });
-
-return false;
-
-}
 
 
 

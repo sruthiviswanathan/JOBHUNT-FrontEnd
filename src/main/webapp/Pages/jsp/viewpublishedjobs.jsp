@@ -81,7 +81,7 @@
                            				 <div class="right__form">
                                 			
                                 			<%-- <form action="${Config.BASE_PATH}company/jobspublished" name="postjob" method="post"> --%>
-                                			<form action="${Config.BASE_PATH}company/jobspublished"  id="form${loop.count}" onsubmit="event.preventDefault(); updateJobs(this);" method="post">
+                                			<form action="${Config.BASE_PATH}company/jobspublished" name="postjob"  id="form${loop.count}" onsubmit="event.preventDefault(); updateJobs(this);" method="post">
                                     		<input type="hidden" name="jobdesignation" value="${vac.getJobRole()}">
                                         	<input type="hidden" name="oldlocation" value="${vac.getLocation()}">	
                                         		<div class="content__updatejobs col-xs-12 col-md-12">
@@ -89,7 +89,7 @@
                                                 <div class="updatejobs__field col-xs-12 col-md-12">
                                                 <label for="select-job" class="field__entry row col-75"><b>JOB DESIGNATION*</b></label>
                                                
-                                                        <select id="job" name="job" class="select row col-75" required>
+                                                        <select id="job" name="job" class="select row col-75">
                                                       		
                                                                <option value="${vac.getJobId()}">${vac.getJobRole()}</option> 
                                                                <c:forEach var="job" items="${jobs}">
@@ -101,26 +101,26 @@
                                                   
                                                 <div class="updatejobs__field col-xs-12 col-md-12">
                                                 <label  for="location" class="field__entry row col-75"><b>LOCATION*</b></label>
-                                                <input type="text" class="field__input row col-75" id="location" name="location" value="${vac.getLocation()}" required>
+                                                <input type="text" class="field__input row col-75" id="location" oninput="removePostJobErrorMessages()" name="location" value="${vac.getLocation()}">
                                                <span class="error" id="location_error"></span>
                                                </div>
                                                
                                                 <div class="updatejobs__field col-xs-12 col-md-12">
                                                 <label  for="salary" class="field__entry row col-75"><b>SALARY(LPA)*</b></label>
-                                                <input type="number" class="field__input row col-75" id="salary" name="salary" value="${vac.getSalary()}"
-                                                        step=".01" required>
+                                                <input type="number" class="field__input row col-75" id="salary" oninput="removePostJobErrorMessages()" name="salary" value="${vac.getSalary()}"
+                                                        step=".01">
                                                  <span class="error" id="salary_error"></span>
                                                  </div>
                                                     
                                                  <div class="updatejobs__field col-xs-12 col-md-12">
                                                 <label  for="count" class="field__entry row col-75"><b>NO OF VACANCIES*</b></label>
-                                                <input type="number" class="field__input row col-75" id="count" name="count" value="${vac.getVacancyCount()}"required>
+                                                <input type="number" class="field__input row col-75" id="count" name="count" oninput="removePostJobErrorMessages()" value="${vac.getVacancyCount()}">
                                                <span class="error" id="count_error"></span>
                                                </div>
                                                
                                                 <div class="updatejobs__field col-xs-12 col-md-12">
                                                 <label for="description" class="field__entry row col-75"><b>JOB DESCRIPTION*</b></label>
-                                                <textarea rows="4" cols="50" class="field__input row col-75" name="description" required>${vac.getJobDescription()}</textarea>
+                                                <textarea rows="4" cols="50" class="field__input row col-75" oninput="removePostJobErrorMessages()" name="description">${vac.getJobDescription()}</textarea>
                                        			<span class="error" id="desc_error"></span>
                                        			</div>
 

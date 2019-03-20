@@ -276,6 +276,82 @@ function validatePostJob()
     
     return true; 
 }
+function validateUpdateJobs(){
+		var location = document.forms["postjob"]["location"];               
+	    var description = document.forms["postjob"]["description"]; 
+	    var salary = document.forms["postjob"]["salary"];  
+	    var count = document.forms["postjob"]["count"];  
+	   
+	    if (location.value == "")                                  
+	    { 
+	    	 locationError = "Please enter the location of job.";
+	      	 document.getElementById("location_error").innerHTML = locationError; 
+	        location.focus(); 
+	        return false; 
+	    }
+
+	    if (salary.value == "")                               
+	    { 
+	    	 salaryError = "Please enter a valid salary amount.";
+	      	 document.getElementById("salary_error").innerHTML =  salaryError ;
+	        salary.focus(); 
+	        return false; 
+	    }
+
+	    if (count.value == "" || count.value === "0")                               
+	    { 
+	    	 countError = "Please enter a valid vacancy count.";
+	      	 document.getElementById("count_error").innerHTML = countError;
+	        count.focus(); 
+	        return false; 
+	    } 
+
+	    if (description.value == "")                                  
+	    { 
+	    	 descError = "Please enter job description.";
+	      	 document.getElementById("desc_error").innerHTML = descError;
+	        description.focus(); 
+	        return false; 
+	    }       
+	    
+	    return true; 
+}
+
+
+
+function removePostJobErrorMessages() {
+    var location = document.getElementById("location_error"); ;               
+    var what =  document.getElementById("job_error");  
+    var salary = document.getElementById("salary_error");    
+    var count = document.getElementById("count_error");
+    var description=document.getElementById("desc_error");
+    
+    if (what.value != "")                  
+    {	
+    	 document.getElementById("job_error").innerHTML = ""; 	      
+    } 
+   
+
+    if (location.value != "")                                  
+    { 	    	
+      	 document.getElementById("location_error").innerHTML = ""; 	      
+    }
+
+    if (salary.value != "")                               
+    { 
+    	 	 document.getElementById("salary_error").innerHTML = "" ;	         
+    }
+    if (count.value != "")                               
+    { 
+    	 	 document.getElementById("count_error").innerHTML = "" ;	         
+    }
+    if (description.value != "")                               
+    { 
+    	 	 document.getElementById("desc_error").innerHTML = "" ;	         
+    }
+    
+    return true; 
+}
 
 
 function validateRequestVacancy(){
@@ -526,6 +602,60 @@ function postJob(event){
 return true;
 	}
 }
+
+function updateJobs(event){
+
+	if(validateUpdateJobs()){
+    var formEl = $(event);
+    console.log(event);	    
+    var snackbar = document.getElementById("snackbar");   
+    snackbar.removeChild(snackbar.childNodes[0]);
+    
+    $.ajax({
+      type: 'POST',
+      url: formEl.prop('action'),
+      accept: {
+        javascript: 'application/javascript'
+      },
+      data: formEl.serialize(),
+      dataType:"text",
+      success:function(msg){
+    	  console.log(msg);
+    	  if (msg === 'updateSuccess'){
+    	  var para = document.createElement("p");
+    	  var node = document.createTextNode("VACANCY HAS BEEN UPDATED SUCCESSFULLY!!");
+    	  para.appendChild(node);
+    	  var element = document.getElementById("snackbar");
+    	  element.className="show";
+    	  element.appendChild(para);
+    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);
+    	  } 
+    	  else if(msg === 'deleteSuccess'){
+    		  var para = document.createElement("p");
+	    	  var node = document.createTextNode("VACANCY HAS BEEN DELETED SUCCESSFULLY");
+	    	  para.appendChild(node);
+	    	  var element = document.getElementById("snackbar");
+	    	  element.className="show";
+	    	  element.appendChild(para);
+	    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);  
+    	  } 
+    	  else if(msg === 'error'){
+    		  var para = document.createElement("p");
+	    	  var node = document.createTextNode("OOPS!!SOMETHING WENT WRONG!!");
+	    	  para.appendChild(node);
+	    	  var element = document.getElementById("snackbar");
+	    	  element.className="show";
+	    	  element.appendChild(para);
+	    	  setTimeout(function(){ element.className = element.className.replace("show", ""); }, 5000);  
+    	  }
+      }
+    });
+
+return false;
+	}
+}
+
+
 
 
 function deleteTag(id){

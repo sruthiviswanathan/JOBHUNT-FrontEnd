@@ -58,7 +58,7 @@
 				<div class="postjob__field col-xs-12 col-md-12">
 				<label for="select-job" class="field__entry row col-75"><b>JOB DESIGNATION*</b></label>
 			
-					 <select id="job" class="select row col-75" name="job">
+					 <select id="job" class="select row col-75" oninput="removePostJobErrorMessages()" name="job">
 					 <option value="">Select a Job Designation</option>
 						<c:forEach var="job" items="${jobs}">
 							<option value="${job.getJobId()}"><c:out
@@ -73,25 +73,25 @@
 				
 				<div class="postjob__field col-xs-12 col-md-12">
 				<label for="location" class="field__entry row col-25"><b>LOCATION*</b></label>
-				<input type="text" class="field__input row col-75" id="location" name="location" placeholder="Enter Job Location.."> 
+				<input type="text" class="field__input row col-75" id="location" name="location" oninput="removePostJobErrorMessages()" placeholder="Enter Job Location.."> 
 				<span class="error" id="location_error"></span>
 				</div>
 				
 				<div class="postjob__field col-xs-12 col-md-12">
 				<label for="salary" class="field__entry row col-25"><b>SALARY(LPA)*</b></label> 
-				<input type="number" class="field__input row col-75" id="salary" name="salary" placeholder="Enter Salary.." step=".01"> 
+				<input type="number" class="field__input row col-75" id="salary" name="salary" oninput="removePostJobErrorMessages()" placeholder="Enter Salary.." step=".01" min="1"> 
 				<span class="error" id="salary_error"></span>
 				</div>
 				
 				<div class="postjob__field col-xs-12 col-md-12">
 				<label for="count" class="field__entry row col-75"><b>NO OF VACANCIES*</b></label>
-				<input type="number" class="field__input row col-75" id="count" name="count" placeholder="Enter Vacancy Count..">
+				<input type="number" class="field__input row col-75" id="count" name="count" oninput="removePostJobErrorMessages()" placeholder="Enter Vacancy Count.." min="1">
 				<span class="error" id="count_error"></span>
 				</div>
 					
 				<div class="postjob__field col-xs-12 col-md-12">	
 				<label for="description" class="field__entry row col-75"><b>JOB DESCRIPTION*</b></label>
-				<textarea rows="4" cols="50" name="description" class="field__input row col-75" placeholder="Enter Job Description"></textarea>
+				<textarea rows="4" cols="50" name="description" class="field__input row col-75" oninput="removePostJobErrorMessages()" placeholder="Enter Job Description"></textarea>
 				<span class="error" id="desc_error"></span>
 				</div>
 			

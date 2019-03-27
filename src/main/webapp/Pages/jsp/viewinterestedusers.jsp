@@ -59,10 +59,7 @@
 							
 							<c:when test="${user.getContacted() == 'yes'}">
 							<td>
-							<form action="${Config.BASE_PATH}contacted-users"  id="apply1${loop.count}" onsubmit="event.preventDefault(); apply1(this,'button${loop.count}');"  method="post">
-							<input type="hidden" name="emailId" value="${user.getEmail()}"/>
-							<input type="hidden" name="job" value="${user.getJobRole()}"/>
-							<input type="hidden" name="location" value="${user.getLocation()}"/>
+							<form action="#">
 							<input type ="submit"  class="disabled" id="button${loop.count}" name = "contacted" value="CONTACTED">
 							</form>
 							</td>

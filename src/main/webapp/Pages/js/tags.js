@@ -37,7 +37,8 @@
             text: text,
             element: document.createElement('span'),
         };
-
+        var button = document.getElementById("updateButton");
+    	button.classList.add("button");
         tag.element.classList.add('tag');
         tag.element.textContent = tag.text;
 

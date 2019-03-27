@@ -170,7 +170,18 @@
   color:white;
  }
   
-
+.disabled{	
+	font-family: inherit;
+  	font-size: 16px;
+  	font-weight:bold;
+    display: inline-block;
+  	background-color: #bdbdbd;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+   	cursor:not-allowed;
+    letter-spacing: 1px;
+}
 
 .addjob {
   width:10%;

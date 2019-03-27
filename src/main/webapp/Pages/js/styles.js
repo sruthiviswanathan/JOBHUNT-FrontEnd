@@ -122,6 +122,12 @@ function submitFindCompany(){
   }
 }
 
+function enableUpdate(){
+	var button = document.getElementById("updateButton");
+	button.classList.add("button");
+}
+
+
 function apply(event,id){
 	console.log(event);
 

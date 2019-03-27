@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
         <%@ page import="com.zilker.onlinejobsearch.config.Config"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%--  <%@ include file = "usernavbar.jsp" %> --%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,32 +58,32 @@
                 <c:forEach var="data" items="${userData}">
              <div class="profile__field col-xs-12 col-md-12">     
                     <label for="uname" class="field__entry row col-75"><b>USERNAME*</b></label>
-                    <input type="text" class="field__input row col-75" id="uname" name="username" value="${data.getUserName()}">  
+                    <input type="text" class="field__input row col-75" oninput="enableUpdate()" id="uname" name="username" value="${data.getUserName()}">  
                      <span class="error" id="name_error"></span>                     
                     </div>
                     
              <div class="profile__field col-xs-12 col-md-12">          
                         <label for="cname" class="field__entry row col-75"><b>COMPANY NAME*</b></label>
-                        <input type="text" class="field__input row col-75" id="cname" name="cname" value="${data.getCompany()}" >
+                        <input type="text" class="field__input row col-75" oninput="enableUpdate()" id="cname" name="cname" value="${data.getCompany()}" >
                          <span class="error" id="comp_error"></span> 
                     </div>
                     
                        <div class="profile__field col-xs-12 col-md-12">
                         <label for="designation" class="field__entry row col-75"><b>DESIGNATION*</b></label>
-                        <input type="text" class="field__input row col-75" id="desig" name="designation" value="${data.getDesignation()}">
+                        <input type="text" class="field__input row col-75" oninput="enableUpdate()" id="desig" name="designation" value="${data.getDesignation()}">
                         <span class="error" id="des_error"></span> 
                    	   </div>
                        
                        <div class="profile__field col-xs-12 col-md-12">
                         <label for="skills" class="field__entry row col-75"><b>SKILLS SAVED IN YOUR PROFILE</b></label>
-                         <input type="hidden" id="skillset" name="skillset" value="">
+                         <input type="hidden" id="skillset"  name="skillset" value="">
                          <div class="tags-input field__input row col-75" id="skill" data-name="tags-input">
                      
                      <c:if test="${userTech.size() != 0 }">    
                      <c:forEach var="user" items="${userTech}" varStatus="loop"> 	
 					
 					<div class="input__skills"id="item${loop.count}">                          
-                       <span class="tag" id="tag${loop.count}">${user.getTechnologyName()}<%-- <c:out value="${user.getTechnologyName()}"></c:out> --%>
+                       <span class="tag" id="tag${loop.count}">${user.getTechnologyName()}
                        <span class="close" id="${loop.count}" onclick="deleteTag(this.id)"></span>
                        </span>
      				</div>
@@ -98,7 +97,7 @@
 					</c:forEach>
              
                 <div class="profile__nav">
-                    <input type="submit" class="button col-xs-12 col-md-12" value="UPDATE" name="Submit">  
+                    <input type="submit" id="updateButton" class="col-xs-12 col-md-12 disabled" value="UPDATE" name="Submit">  
                     <button type="reset" id="cancel" class="button cancelbtn col-xs-12 col-md-12">CANCEL</button>
                 </div>
             </form>
